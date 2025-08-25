@@ -106,6 +106,20 @@ class DbStructControl
                     e.target.classList.add('fa-plus');
                 }
             }
+            if (e.target.classList.contains('fa-copy')) {
+                e.preventDefault();
+                const td = e.target.parentNode.parentNode;
+                const text = td.innerText.trim();
+
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        e.target.parentNode.style.opacity = '1';
+                        setTimeout(() => {
+                            e.target.parentNode.style.opacity = '0.5';
+                        }, 300);
+                    })
+                    .catch(err => console.error('Copy failed', err));
+            }
         });
     }
 
@@ -180,12 +194,19 @@ class DbStructControl
         const el = document.querySelector('#db_struct_table');
         const tbody = el.getElementsByTagName('tbody')[0];
 
+        const copyButton = `
+            <a href="#" title="Copy" style="font-size: 70%; opacity: 0.5; margin-left: 10px;">
+              <i class="fas fa-copy"></i>
+          </a>
+        `;
+
         Object.entries(data.struct).forEach(([tableName, tableInfo], tableIndex) => {
             const row = document.createElement('tr');
             row.innerHTML = `
         <td colspan="2">
           <span class="toggle-btn" data-table="${tableIndex}"><i class="fa fa-plus"></i></span>
           ${tableName}
+          ${copyButton}
         </td>
       `;
             tbody.appendChild(row);
@@ -194,7 +215,7 @@ class DbStructControl
                 const colRow = document.createElement('tr');
                 colRow.classList.add('sub-row', `table-${tableIndex}`, 'd-none');
                 colRow.innerHTML = `
-          <td>${colName}</td>
+          <td>${colName}${copyButton}</td>
           <td>${colType}</td>
         `;
                 tbody.appendChild(colRow);

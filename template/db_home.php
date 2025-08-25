@@ -16,19 +16,19 @@
 <div class="container-fluid mt-2">
     <form method="POST" action="?">
         <div class="row input-group">
-            <div class="col-md-4 align-self-center">
+            <div class="col-md-3 align-self-center">
                 <label for="db_name" class="form-label h2">
                     OSIV-DB Web Interface
                 </label>
             </div>
             <div class="col-auto">
-                <div class="form-floating">
-                    <select class="form-select" id="db_name" name="db" aria-label="Floating label select example">
+                <div class="d-flex align-items-center gap-2">
+                    <label for="db_name">Database</label>
+                    <select class="form-select" id="db_name" name="db">
                         <?php foreach ($dbOpts as $dbVal => $dbOpt) { ?>
                             <option value="<?php echo $dbVal; ?>"><?php echo $dbOpt['displayName']; ?></option>
                         <?php } ?>
                     </select>
-                    <label for="db_name">Database</label>
                 </div>
             </div>
             <div class="ms-md-auto col-md-4 text-end opacity-25<?php echo $debug ? '' : ' d-none' ?>">
