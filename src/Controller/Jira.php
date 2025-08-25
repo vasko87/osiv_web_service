@@ -32,7 +32,7 @@ class Jira extends Base
 
         try {
             $date = new \DateTime($date);
-            $date = $date->format('d/m/Y');
+            $date = $date->format('d.m.Y');
         } catch (\Exception $e) {
             return new JsonResponse(400, ['error' => 'Invalid date format']);
         }
