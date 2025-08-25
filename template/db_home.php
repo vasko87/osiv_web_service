@@ -14,7 +14,7 @@
 <body>
 
 <div class="container-fluid mt-2">
-    <form method="POST" action="?" target="_blank">
+    <form method="POST" action="?">
         <div class="row input-group">
             <div class="col-md-3 align-self-center">
                 <label for="db_name" class="form-label h2">
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="text-danger d-none" id="db_struct_error"></div>
-                            <table class="table table-striped table-bordered d-none" id="db_struct_table">
+                            <table class="table table-bordered d-none" id="db_struct_table">
                                 <tbody>
                                 </tbody>
                             </table>
@@ -111,26 +111,29 @@
             <div class="tab-pane container-fluid<?php echo $form === 'compare' ? ' active' : ' fade' ?>" id="compare">
                 <div class="row mt-3 justify-content-center">
                     <div class="col-md-4">
+                        <div id="comparison_status">
                         <?php if (empty($currentComparisonState)) { ?>
                             <h4>Current status: comparison not active</h4>
-                            <button class="btn btn-primary" type="submit" name="action[comparison]" value="activate">
+                            <button class="btn btn-primary" type="button" id="btn_comparison_activate" data-action="activate">
                                 ACTIVATE
                             </button>
                         <?php } else if ($currentComparisonState['state'] === 'active') { ?>
-                            <h4>Current status: <span class="text-warning">in progress<span></h4>
-                            <button class="btn btn-danger" type="submit" name="action[comparison]" value="stop">STOP
+                            <h4>Current status: <span class="text-warning">in progress</span></h4>
+                            <button class="btn btn-danger" type="button" id="btn_comparison_stop" data-action="stop">STOP
                             </button>
-                            <button class="btn btn-success" type="submit" name="action[comparison]" value="done">
+                            <button class="btn btn-success" type="button" id="btn_comparison_done" data-action="done">
                                 FINISH
                             </button>
                         <?php } else if ($currentComparisonState['state'] === 'done') { ?>
-                            <h4>Current status: <span class="text-success">complete<span></h4>
-                            <button class="btn btn-secondary" type="submit" name="action[comparison]" value="stop">
+                            <h4>Current status: <span class="text-success">complete</span></h4>
+                            <button class="btn btn-secondary" type="button" id="btn_comparison_reset" data-action="stop">
                                 RESET
                             </button>
                         <?php } ?>
+                        </div>
                     </div>
                     <div class="col-md-8">
+                        <div id="comparison_results">
                         <table class="table">
                             <?php if ($currentComparisonState && $currentComparisonState['state'] === 'done') {
                                 foreach ($currentComparisonState['diff'] as $name => $item) {
@@ -170,6 +173,7 @@
                                 <?php } ?>
                             <?php } ?>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>

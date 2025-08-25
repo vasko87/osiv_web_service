@@ -106,10 +106,9 @@ class Db extends Base
 
     public function actionComparison(Request $request): Response
     {
-        $actionArg = $request->getArray('action');
-        $action = $actionArg['comparison'];
+        $action = $request->getString('action');
         if (empty($action)) {
-            return new JsonResponse(400, ['error' => "'comparison' parameter is invalid"]);
+            return new JsonResponse(400, ['error' => "'action' parameter is invalid"]);
         }
 
         session_start();
@@ -141,7 +140,10 @@ class Db extends Base
                 break;
         }
 
-        return new RedirectResponse('#compare');
+        return new JsonResponse(200, [
+            'status' => 'success',
+            'comparisonState' => $_SESSION['db_comparison']
+        ]);
     }
 
     public function actionGetDbStruct(Request $request): Response

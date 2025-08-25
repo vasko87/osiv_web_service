@@ -48,6 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
     collapseDbStruct.addEventListener('show.bs.collapse', function () {
         window.dbSctructControl.update();
     })
+
+    // Add comparison handlers
+    setupComparisonHandlers();
 });
 
 document.addEventListener('shown.bs.tab', function (e) {
@@ -56,6 +59,12 @@ document.addEventListener('shown.bs.tab', function (e) {
 });
 
 function beforeSubmit(e) {
+    // Prevent form submission for comparison buttons (they are now type="button")
+    if (e.submitter && e.submitter.dataset.action) {
+        e.preventDefault();
+        return;
+    }
+
     const q = document.getElementById('ta_q').value;
 
     if (e.submitter.name === 'action[query]' && q === '') {
@@ -291,8 +300,8 @@ function renderSimpleTable(data, container) {
             const cellStr = String(cellValue);
 
             if (cellStr.length > 256) {
-                const truncated = cellStr.substring(0, 256);
-                const remaining = cellStr.substring(256);
+                const truncated = cellStr.substring(0, 128);
+                const remaining = cellStr.substring(128);
                 html += `<td>
                     <span class="truncated-content">${truncated}</span>
                     <span class="remaining-content d-none">${remaining}</span>
@@ -413,4 +422,145 @@ function addShowMoreHandlers(container) {
             }
         }
     });
+}
+
+function setupComparisonHandlers() {
+    const comparisonContainer = document.querySelector('#comparison_status');
+    if (!comparisonContainer) return;
+
+    comparisonContainer.addEventListener('click', function(e) {
+        if (e.target.dataset.action) {
+            e.preventDefault();
+            handleComparisonAction(e.target.dataset.action);
+        }
+    });
+}
+
+function handleComparisonAction(action) {
+    const form = document.querySelector('form');
+    const formData = new FormData(form);
+    formData.append('action', action);
+
+    // Show loading state
+    showComparisonLoading();
+
+    fetch('comparison', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            updateComparisonUI(data.comparisonState);
+        } else {
+            console.error('Comparison error:', data.error);
+            alert('Error: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Comparison request failed:', error);
+        alert('Request failed: ' + error.message);
+    })
+    .finally(() => {
+        hideComparisonLoading();
+    });
+}
+
+function showComparisonLoading() {
+    const statusContainer = document.querySelector('#comparison_status');
+    const buttons = statusContainer.querySelectorAll('button');
+    buttons.forEach(btn => {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Loading...';
+    });
+}
+
+function hideComparisonLoading() {
+    // This will be handled by updateComparisonUI
+}
+
+function updateComparisonUI(comparisonState) {
+    const statusContainer = document.querySelector('#comparison_status');
+    const resultsContainer = document.querySelector('#comparison_results');
+
+    // Update status section
+    if (!comparisonState) {
+        // No active comparison
+        statusContainer.innerHTML = `
+            <h4>Current status: comparison not active</h4>
+            <button class="btn btn-primary" type="button" data-action="activate">
+                ACTIVATE
+            </button>
+        `;
+        resultsContainer.innerHTML = '<table class="table"></table>';
+    } else if (comparisonState.state === 'active') {
+        // Comparison in progress
+        statusContainer.innerHTML = `
+            <h4>Current status: <span class="text-warning">in progress</span></h4>
+            <button class="btn btn-danger" type="button" data-action="stop">STOP</button>
+            <button class="btn btn-success" type="button" data-action="done">FINISH</button>
+        `;
+        resultsContainer.innerHTML = '<table class="table"></table>';
+    } else if (comparisonState.state === 'done') {
+        // Comparison complete
+        statusContainer.innerHTML = `
+            <h4>Current status: <span class="text-success">complete</span></h4>
+            <button class="btn btn-secondary" type="button" data-action="stop">
+                RESET
+            </button>
+        `;
+
+        // Render results table
+        renderComparisonResults(comparisonState.diff);
+    }
+}
+
+function renderComparisonResults(diff) {
+    const resultsContainer = document.querySelector('#comparison_results');
+    let tableHTML = '<table class="table">';
+
+    if (diff) {
+        Object.entries(diff).forEach(([name, item]) => {
+            let label, badge;
+
+            switch (item.type) {
+                case 'new':
+                    label = ' → ' + item.after;
+                    badge = '<span class="badge bg-warning">new</span>';
+                    break;
+                case 'removed':
+                    label = item.before + ' → ';
+                    badge = '<span class="badge bg-warning">removed</span>';
+                    break;
+                case 'more':
+                    label = item.before + ' → ' + item.after;
+                    badge = '<span class="badge bg-success">more</span>';
+                    break;
+                case 'less':
+                    label = item.before + ' → ' + item.after;
+                    badge = '<span class="badge bg-danger">less</span>';
+                    break;
+                case 'same':
+                    label = '<span class="text-muted">' + item.before + '</span>';
+                    badge = '<span class="badge bg-secondary">same</span>';
+                    name = '<span class="text-muted">' + name + '</span>';
+                    break;
+                default:
+                    label = '';
+                    badge = '';
+                    break;
+            }
+
+            tableHTML += `
+                <tr>
+                    <td>${badge}</td>
+                    <td>${name}</td>
+                    <td class="text-end">${label}</td>
+                </tr>
+            `;
+        });
+    }
+
+    tableHTML += '</table>';
+    resultsContainer.innerHTML = tableHTML;
 }
