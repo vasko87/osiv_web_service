@@ -32,7 +32,7 @@ class Jira extends Base
 
         try {
             $date = new \DateTime($date);
-            $date = $date->format('m/d/Y');
+            $date = $date->format('d/m/Y');
         } catch (\Exception $e) {
             return new JsonResponse(400, ['error' => 'Invalid date format']);
         }
@@ -106,6 +106,7 @@ class Jira extends Base
             }
 
             $excelLibWrapper->setCellValue('f3', $date);
+
             $excelLibWrapper->setCellValue('f2', $fixVersion);
 
             $tempFile = tempnam(sys_get_temp_dir(), '_jira_xls');
