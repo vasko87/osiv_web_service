@@ -1,6 +1,6 @@
 RewriteEngine On
 
-RewriteBase /db_web_service/public
+RewriteBase /osiv_web_service/public
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

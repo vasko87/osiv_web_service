@@ -25,14 +25,18 @@ if (!\function_exists(b::class)) {
     }
 }
 
-if (!\function_exists(s::class)) {
+if (!function_exists('s')) {
     /**
      * @return UnicodeString|ByteString
      */
     function s(?string $string = ''): AbstractString
     {
-        $string ??= '';
+        if ($string === null) {
+            $string = '';
+        }
 
-        return preg_match('//u', $string) ? new UnicodeString($string) : new ByteString($string);
+        return preg_match('//u', $string)
+            ? new UnicodeString($string)
+            : new ByteString($string);
     }
 }
