@@ -3,13 +3,13 @@
 <?php /** @var $currentComparisonState array */ ?>
 <html lang="en-US">
 <head>
-    <title>OSIV Web Interface</title>
+    <title>OSIV-DB Web Interface</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <link href="./../css/bootstrap.min.css" rel="stylesheet">
     <link href="./../css/db.css" rel="stylesheet">
     <link href="./../css/font-awesome-6.5.2.min.css" rel="stylesheet">
-    <link rel="icon" href="./../icons/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./../icons/huzki.ico" type="image/x-icon" />
 </head>
 <body>
 
@@ -73,7 +73,12 @@
 
                         <h4 class="mt-4">Query templates</h4>
                         <div class="card card-body">
-                            <code>SELECT top 10 * FROM pub.sendung</code>
+                            <div><code>select top 10 * from pub.sendung</code></div>
+                            <div class="mt-3"><code>select * from pub.entscheid where entscheid_id=23956</code></div>
+                            <div class="mt-3"><code>select * from pub.sendung where sendung_id=87163</code></div>
+                            <div class="mt-3"><code>select * from pub.stamm where stamm_id=8070</code></div>
+                            <div class="mt-3"><code>update pub.portalbenutzer set portalaktiv=1 where portalbenutzer_id=1</code></div>
+                            <div class="mt-3"><code>select * from pub.portalbenutzer</code></div>
                         </div>
                     </div>
                     <div class="col-md-4 text-center mt-2" style="padding-top:2px">

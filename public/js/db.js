@@ -117,7 +117,6 @@ class DbStructControl
                 textarea.select();
                 try {
                     document.execCommand('copy');  // копируем текст
-                    console.log('Copied:', text);
                     e.target.parentNode.style.opacity = '1';
                     setTimeout(() => {
                         e.target.parentNode.style.opacity = '0.5';

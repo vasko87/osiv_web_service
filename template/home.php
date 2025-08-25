@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/db.css" rel="stylesheet">
-    <link rel="icon" href="./icons/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./icons/osiv.ico" type="image/x-icon" />
 </head>
 <body>
 

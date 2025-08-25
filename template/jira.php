@@ -1,12 +1,12 @@
 <html lang="en-US">
 <head>
-    <title>OSIV Web Interface</title>
+    <title>Release Notes WS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <link href="./../css/bootstrap.min.css" rel="stylesheet">
     <link href="./../css/font-awesome-6.5.2.min.css" rel="stylesheet">
     <link href="./../css/db.css" rel="stylesheet">
-    <link rel="icon" href="./../icons/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./../icons/jiraFetch.ico" type="image/x-icon" />
 </head>
 <body>
 
