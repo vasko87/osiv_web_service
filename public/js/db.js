@@ -111,14 +111,21 @@ class DbStructControl
                 const td = e.target.parentNode.parentNode;
                 const text = td.innerText.trim();
 
-                navigator.clipboard.writeText(text)
-                    .then(() => {
-                        e.target.parentNode.style.opacity = '1';
-                        setTimeout(() => {
-                            e.target.parentNode.style.opacity = '0.5';
-                        }, 300);
-                    })
-                    .catch(err => console.error('Copy failed', err));
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');  // копируем текст
+                    console.log('Copied:', text);
+                    e.target.parentNode.style.opacity = '1';
+                    setTimeout(() => {
+                        e.target.parentNode.style.opacity = '0.5';
+                    }, 500);
+                } catch (err) {
+                    console.error('Copy failed', err);
+                }
+                document.body.removeChild(textarea);
             }
         });
     }
