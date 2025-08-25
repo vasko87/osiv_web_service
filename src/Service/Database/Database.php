@@ -67,7 +67,7 @@ class Database
 
     public function fetchTableColumns(string $table): array
         {
-            $sql = "SELECT COL, COLTYPE, WIDTH FROM sysprogress.syscolumns WHERE TBL = 'pub." . $table . "'";
+            $sql = "SELECT COL, COLTYPE, WIDTH FROM sysprogress.syscolumns WHERE TBL = '" . $table . "'";
             $stmt = $this->execute($sql);
             $res = $this->fetchAll($stmt);
 
