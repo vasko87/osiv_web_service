@@ -14,7 +14,7 @@
 <body>
 
 <div class="container-fluid mt-2">
-    <form method="POST" action="?">
+    <form method="POST" action="?" target="_blank">
         <div class="row input-group">
             <div class="col-md-3 align-self-center">
                 <label for="db_name" class="form-label h2">
@@ -67,8 +67,12 @@
 
                         <div class="row mt-4">
                             <div>
+                                <button type="button" id="btn_execute" class="btn btn-primary">Execute and View</button>
                                 <button type="submit" name="action[query]" value="1" class="btn btn-primary">Execute</button>
                             </div>
+                        </div>
+
+                        <div id="query_result" class="card card-body mt-2" style="max-height: 500px; overflow-y: auto;">
                         </div>
 
                         <h4 class="mt-4">Query templates</h4>
