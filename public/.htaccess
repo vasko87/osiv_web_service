@@ -1,0 +1,15 @@
+RewriteEngine On
+
+RewriteBase /db_web_service/public
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# /controller/action → index.php?c=controller&action=action
+RewriteRule ^([^/]+)/([^/]+)/?$ index.php?c=$1&a=$2 [L,QSA]
+
+# /controller → index.php?c=controller
+RewriteRule ^([^/]+)/?$ index.php?c=$1 [L,QSA]
+
+# Пустой URL (/) → index.php
+RewriteRule ^$ index.php [L,QSA]
