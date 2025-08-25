@@ -14,7 +14,7 @@
 <body>
 
 <div class="container-fluid mt-2">
-    <form method="POST" action="?">
+    <form method="POST" action="?" target="_blank">
         <div class="row input-group">
             <div class="col-md-3 align-self-center">
                 <label for="db_name" class="form-label h2">
