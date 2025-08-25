@@ -106,7 +106,6 @@ class Jira extends Base
             }
 
             $excelLibWrapper->setCellValue('f3', $date);
-
             $excelLibWrapper->setCellValue('f2', $fixVersion);
 
             $tempFile = tempnam(sys_get_temp_dir(), '_jira_xls');

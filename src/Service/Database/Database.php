@@ -65,6 +65,15 @@ class Database
         return (int)$stmt->fetchColumn();
     }
 
+    public function fetchTableColumns(string $table): int
+        {
+            $sql = "SELECT COL, COLTYPE, WIDTH FROM sysprogress.syscolumns WHERE TBL = 'pub." . $table . "'";
+            $stmt = $this->execute($sql);
+            $res = $this->fetchAll($stmt);
+
+            return is_array($res) ? $res : [];
+        }
+
     public function fetchTableReport(): array
     {
         $report = [];
@@ -86,18 +95,15 @@ class Database
         return $input;
     }
 
-    public function getDbStruct() {
-        $sql = "SELECT TBL, FIELD, TYPE FROM sysprogress.sysfields WHERE TBLTYPE='T'";
-        $stmt = $this->execute($sql);
-        $result = $this->fetchAll($stmt);
-
+    public function getDbStruct()
+    {
         $structure = [];
-        foreach ($result as $row) {
-            $table = $row['TBL'];
-            if (!isset($structure[$table])) {
-                $structure[$table] = [];
+        foreach ($this->fetchTableNames() as $tableName) {
+            $tableName = $tableName['TBL'];
+            $structure[$tableName] = ['columns' => []];
+            foreach ($this->fetchTableColumns($tableName) as $colData) {
+                $structure[$tableName]['columns'][$colData['COL']] = $colData['COLTYPE'] . '(' . $colData['WIDTH'] . ')';
             }
-            $structure[$table]['columns'][row['FIELD']] = $row['TYPE'];
         }
 
         return $structure;

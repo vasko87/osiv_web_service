@@ -5,6 +5,7 @@ namespace DbService\Service\Excel;
 require __DIR__ . '/../../../vendor/PhpSpreadsheet-1.23.0/vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 class ExcelLibWrapper
 {
@@ -24,12 +25,13 @@ class ExcelLibWrapper
 
     public function setCellValueByColumnAndRow($col, $currentRow, $value)
     {
-        $this->worksheet->setCellValueByColumnAndRow($col, $currentRow, $value);
+        $cell = $this->worksheet->getCellByColumnAndRow($col, $currentRow);
+        $cell->setValueExplicit($value, DataType::TYPE_STRING);
     }
 
     public function setCellValue(string $cell, $value)
     {
-        $this->worksheet->getCell($cell)->setValue($value);
+        $this->worksheet->getCell($cell)->setValueExplicit($value, DataType::TYPE_STRING);
     }
 
     public function saveSpreadsheetTo(string $filePath)
