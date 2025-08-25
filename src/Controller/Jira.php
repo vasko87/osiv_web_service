@@ -99,7 +99,7 @@ class Jira extends Base
             foreach ($rows as $rowData) {
                 $col = 1;
                 foreach ($rowData as $value) {
-                    $excelLibWrapper->setCellValueByColumnAndRow($col, $currentRow, $value);
+                    $excelLibWrapper->setCellValueByColumnAndRowWithBorder($col, $currentRow, $value);
                     $col++;
                 }
                 $currentRow++;
