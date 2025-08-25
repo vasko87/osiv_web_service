@@ -68,7 +68,14 @@ class Jira extends Base
         ]);
 
         foreach ($iterations as $iteration) {
-            $rows[] = ['Typ' => $iteration['label']];
+            $rows[] = [
+                'Typ' => $iteration['label'],
+                'Internes Ticket' => '',
+                'OSD Ticket' => '',
+                'Beschreibung' => '',
+                'Komponente' => '',
+                'Geplant' => ''
+            ];
 
             $url = $this->config['base_url'] . '/rest/api/2/search?jql=' . urlencode($iteration['JQL']) . '&maxResults=100';
 
