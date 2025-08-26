@@ -120,7 +120,7 @@ class Jira extends Base
             $excelLibWrapper->saveSpreadsheetTo($tempFile);
 
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="' . $this->config['tgt_excel_file'] . '"');
+            header('Content-Disposition: attachment;filename="' . $this->config['tgt_excel_file'] . ' ' . $fixVersion . '.xlsx"');
             header('Cache-Control: max-age=0');
             readfile($tempFile);
 
