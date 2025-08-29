@@ -7,6 +7,13 @@
     <link href="./../css/font-awesome-6.5.2.min.css" rel="stylesheet">
     <link href="./../css/db.css" rel="stylesheet">
     <link rel="icon" href="./../icons/jiraFetch.ico" type="image/x-icon" />
+
+     <style>
+          #version::placeholder {
+            color: #aaa;
+            opacity: 0.7;
+          }
+     </style>
 </head>
 <body>
 
