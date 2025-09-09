@@ -87,11 +87,15 @@ class Jira extends Base
                 $issues = $data['issues'] ?? [];
 
                 foreach ($issues as $issue) {
+                    $beschreibung = $iteration['label'] === 'Known Issue'
+                        ? ($issue['fields']['customfield_10789'] ?? '')
+                        : ($issue['fields']['customfield_10785'] ?? '');
+                
                     $rows[] = [
                         'Typ' => $issue['fields']['issuetype']['name'] ?? '',
                         'Internes Ticket' => $issue['key'] ?? '',
                         'OSD Ticket' => $issue['fields']['customfield_10786'] ?? '',
-                        'Beschreibung' => $issue['fields']['customfield_10785'] ?? '',
+                        'Beschreibung' => $beschreibung,
                         'Komponente' => implode(', ', array_column($issue['fields']['components'] ?? [], 'name')),
                         'Geplant' => implode(', ', array_column($issue['fields']['fixVersions'] ?? [], 'name'))
                     ];
