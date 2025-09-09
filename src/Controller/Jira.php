@@ -91,7 +91,7 @@ class Jira extends Base
                         'Typ' => $issue['fields']['issuetype']['name'] ?? '',
                         'Internes Ticket' => $issue['key'] ?? '',
                         'OSD Ticket' => $issue['fields']['customfield_10786'] ?? '',
-                        'Beschreibung' => $issue['fields']['summary'] ?? '',
+                        'Beschreibung' => $issue['fields']['customfield_10785'] ?? '',
                         'Komponente' => implode(', ', array_column($issue['fields']['components'] ?? [], 'name')),
                         'Geplant' => implode(', ', array_column($issue['fields']['fixVersions'] ?? [], 'name'))
                     ];
