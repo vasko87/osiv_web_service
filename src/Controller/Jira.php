@@ -31,8 +31,7 @@ class Jira extends Base
         }
 
         try {
-            $date = new \DateTime($date);
-            $date = $date->format('d.m.Y');
+            $date = (new \DateTime($date))->format('d.m.Y');
         } catch (\Exception $e) {
             return new JsonResponse(400, ['error' => 'Invalid date format']);
         }
@@ -55,17 +54,9 @@ class Jira extends Base
             ]
         ];
 
+        $auth = base64_encode($this->config['user_email'] . ':' . $this->config['api_token']);
         $rows = [];
         $startRow = 9;
-
-        $auth = base64_encode($this->config['user_email'] . ':' . $this->config['api_token']);
-        $context = stream_context_create([
-            'http' => [
-                'method' => 'GET',
-                'header' => "Authorization: Basic $auth\r\n" .
-                            "Accept: application/json\r\n"
-            ]
-        ]);
 
         foreach ($iterations as $iteration) {
             $rows[] = [
@@ -74,65 +65,114 @@ class Jira extends Base
                 'OSD Ticket' => '',
                 'Beschreibung' => '',
                 'Komponente' => '',
+                'Erstellt' => '',
                 'Geplant' => ''
             ];
 
-            $url = $this->config['base_url'] . '/rest/api/2/search?jql=' . urlencode($iteration['JQL']) . '&maxResults=100';
+            $url = $this->config['base_url'] . '/rest/api/3/search/jql';
 
-            try {
-                $response = file_get_contents($url, false, $context);
-                if ($response === false) throw new Exception('Error fetching data from Jira');
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                "Authorization: Basic $auth",
+                "Accept: application/json",
+                "Content-Type: application/json"
+            ]);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+                'jql' => $iteration['JQL'],
+                'maxResults' => 1000,
+                'fields' => ['*all']
+            ]));
 
-                $data = json_decode($response, true);
-                $issues = $data['issues'] ?? [];
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
 
-                foreach ($issues as $issue) {
-                    $beschreibung = $iteration['label'] === 'Known Issue'
-                        ? ($issue['fields']['customfield_10789'] ?? '')
-                        : ($issue['fields']['customfield_10785'] ?? '');
-                
-                    $rows[] = [
-                        'Typ' => $issue['fields']['issuetype']['name'] ?? '',
-                        'Internes Ticket' => $issue['key'] ?? '',
-                        'OSD Ticket' => $issue['fields']['customfield_10786'] ?? '',
-                        'Beschreibung' => $beschreibung,
-                        'Komponente' => implode(', ', array_column($issue['fields']['components'] ?? [], 'name')),
-                        'Geplant' => implode(', ', array_column($issue['fields']['fixVersions'] ?? [], 'name'))
-                    ];
-                }
-            } catch (\Exception $e) {
-                return new JsonResponse(503, ['error' => 'JQL Error: ' . $e->getMessage()]);
+            if ($httpCode !== 200) {
+                return new JsonResponse(503, ['error' => "Jira API returned HTTP $httpCode"]);
             }
+
+            $data = json_decode($response, true);
+            $issues = $data['issues'] ?? [];
+
+
+            foreach ($issues as $issue) {
+                        $beschreibungField = $iteration['label'] === 'Known Issue'
+                            ? ($issue['fields']['customfield_10789'] ?? '')
+                            : ($issue['fields']['customfield_10785'] ?? '');
+
+                        $beschreibung = '';
+
+                        if (is_array($beschreibungField)) {
+                            $extractTextFromADF = function(array $node) use (&$extractTextFromADF): string {
+                                $text = '';
+                                if (isset($node['text'])) {
+                                    $text .= $node['text'];
+                                }
+                                if (isset($node['content']) && is_array($node['content'])) {
+                                    foreach ($node['content'] as $child) {
+                                        $text .= $extractTextFromADF($child);
+                                    }
+                                }
+                                return $text;
+                            };
+
+                            $beschreibung = $extractTextFromADF($beschreibungField);
+                        } else {
+                            $beschreibung = (string)$beschreibungField;
+                        }
+
+                        $created = $issue['fields']['created'] ?? '';
+                        $createdFormatted = '';
+                        if (!empty($created)) {
+                            try {
+                                $createdFormatted = (new \DateTime($created))->format('d.m.Y');
+                            } catch (\Exception $e) {
+                                $createdFormatted = $created; // fallback на исходное значение, если невалидная дата
+                            }
+                        }
+
+                        $rows[] = [
+                            'Typ' => $issue['fields']['issuetype']['name'] ?? '',
+                            'Internes Ticket' => $issue['key'] ?? '',
+                            'OSD Ticket' => $issue['fields']['customfield_10786'] ?? '',
+                            'Beschreibung' => $beschreibung,
+                            'Komponente' => implode(', ', array_column($issue['fields']['components'] ?? [], 'name')),
+                            'Erstellt' => $createdFormatted,
+                            'Geplant' => implode(', ', array_column($issue['fields']['fixVersions'] ?? [], 'name'))
+                        ];
+                    }
         }
 
         try {
-            $currentRow = $startRow;
-            foreach ($rows as $rowData) {
-                $col = 1;
-                foreach ($rowData as $value) {
-                    $excelLibWrapper->setCellValueByColumnAndRowWithBorder($col, $currentRow, $value);
-                    $col++;
+                    $currentRow = $startRow;
+                    foreach ($rows as $rowData) {
+                        $col = 1;
+                        foreach ($rowData as $value) {
+                            $excelLibWrapper->setCellValueByColumnAndRowWithBorder($col, $currentRow, $value);
+                            $col++;
+                        }
+                        $currentRow++;
+                    }
+
+                    $excelLibWrapper->setCellValue('g3', $date);
+                    $excelLibWrapper->setCellValue('g2', $fixVersion);
+
+                    $tempFile = tempnam(sys_get_temp_dir(), '_jira_xls');
+
+                    $excelLibWrapper->saveSpreadsheetTo($tempFile);
+
+                    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    header('Content-Disposition: attachment;filename="' . $this->config['tgt_excel_file'] . ' ' . $fixVersion . '.xlsx"');
+                    header('Cache-Control: max-age=0');
+                    readfile($tempFile);
+
+                    exit;
+                } catch (\Exception $e) {
+                    return new JsonResponse(503, ['error' => 'Excel save error: ' . $e->getMessage()]);
                 }
-                $currentRow++;
-            }
 
-            $excelLibWrapper->setCellValue('f3', $date);
-            $excelLibWrapper->setCellValue('f2', $fixVersion);
-
-            $tempFile = tempnam(sys_get_temp_dir(), '_jira_xls');
-
-            $excelLibWrapper->saveSpreadsheetTo($tempFile);
-
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="' . $this->config['tgt_excel_file'] . ' ' . $fixVersion . '.xlsx"');
-            header('Cache-Control: max-age=0');
-            readfile($tempFile);
-
-            exit;
-        } catch (\Exception $e) {
-            return new JsonResponse(503, ['error' => 'Excel save error: ' . $e->getMessage()]);
-        }
-
-        return new JsonResponse(200, ['jira' => count($rows) . " rows added starting from row $startRow"]);
+                return new JsonResponse(200, ['jira' => count($rows) . " rows added starting from row $startRow"]);
     }
 }
