@@ -49,7 +49,7 @@ class Jira extends Base
                 'label' => 'Fehlerbehebung'
             ],
             [
-                'JQL' => "project in (PROD, OSIV) and (FixVersion in unreleasedVersions() or FixVersion = empty) and labels = KnownIssue and type = bug",
+                'JQL' => "project in (PROD, OSIV) and (FixVersion in unreleasedVersions()) and labels = KnownIssue and type = bug",
                 'label' => 'Known Issue'
             ]
         ];
@@ -95,7 +95,6 @@ class Jira extends Base
 
             $data = json_decode($response, true);
             $issues = $data['issues'] ?? [];
-
 
             foreach ($issues as $issue) {
                         $beschreibungField = $iteration['label'] === 'Known Issue'
