@@ -49,7 +49,7 @@ class Jira extends Base
                 'label' => 'Fehlerbehebung'
             ],
             [
-                'JQL' => "project in (PROD, OSIV) and (FixVersion in unreleasedVersions()) and labels = KnownIssue and type = bug",
+                'JQL' => "project in (PROD, OSIV) and fixVersion in ($fixVersion) and labels = KnownIssue and type = bug",
                 'label' => 'Known Issue'
             ]
         ];
