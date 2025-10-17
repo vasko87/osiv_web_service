@@ -3,10 +3,10 @@
     <title>Release Notes WS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <link href="./../css/bootstrap.min.css" rel="stylesheet">
-    <link href="./../css/font-awesome-6.5.2.min.css" rel="stylesheet">
-    <link href="./../css/db.css" rel="stylesheet">
-    <link rel="icon" href="./../icons/jiraFetch.ico" type="image/x-icon" />
+    <link href="<?= assetLink('../css/bootstrap.min.css') ?>" rel="stylesheet">
+    <link href="?= assetLink('../css/font-awesome-6.5.2.min.css') ?>" rel="stylesheet">
+    <link href="?= assetLink('../css/db.css') ?>" rel="stylesheet">
+    <link rel="icon" href="?= assetLink('../icons/jiraFetch.ico') ?>" type="image/x-icon" />
 
      <style>
           #version::placeholder {

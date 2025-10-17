@@ -28,3 +28,8 @@ spl_autoload_register(function ($class) {
         require $file;
     }
 });
+
+function assetLink(string $part): string
+{
+    return '/' . trim($_SERVER['REQUEST_URI'], '/') . '/' . $part;
+}
