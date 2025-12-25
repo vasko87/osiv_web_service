@@ -28,7 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let stDb = getCookie('st_db');
     let stSort = getCookie('st_sort');
     let stDebug = getCookie('st_debug');
-    let stQ = JSON.parse(getCookie('st_q'));
+    let stQ;
+    try {
+        stQ = JSON.parse(getCookie('st_q'));
+    } catch (err) {
+
+    }
 
     if (stDb !== undefined) {
         dbSelect.value = stDb;
