@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://services.kinetic.ch/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="WMSessionService" targetNamespace="http://services.kinetic.ch/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://services.kinetic.ch/">
+      <xs:import namespace="http://services.kinetic.ch/Session"/>
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      <xs:element name="CreateWMSession">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://services.kinetic.ch/Session" minOccurs="0" name="sessionModule" type="q1:WMSessionModule"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateWMSessionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CreateWMSessionResult" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateWMSession2">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://services.kinetic.ch/Session" minOccurs="0" name="sessionModule" type="q2:WMSessionModule"/>
+            <xs:element xmlns:q3="http://services.kinetic.ch/Session" minOccurs="0" name="remoteUser" nillable="true" type="q3:RemoteUserInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateWMSession2Response">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CreateWMSession2Result" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsSessionAlive">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsSessionAliveResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IsSessionAliveResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TerminateWMSession">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetObjectTypeNames">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetObjectTypeNamesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetObjectTypeNamesResult" nillable="true" type="q4:ArrayOfstring"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetChoiceList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetChoiceListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetChoiceListResult" nillable="true" type="q5:ArrayOfstring"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="FileOrFolderExists">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="FileOrFolderExistsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="FileOrFolderExistsResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UserOrGroupExists">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="userOrGroupName" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UserOrGroupExistsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="UserOrGroupExistsResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsMemberOfGroup">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="groupName" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsMemberOfGroupResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IsMemberOfGroupResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsUserMemberOfGroup">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="groupName" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsUserMemberOfGroupResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IsUserMemberOfGroupResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+      <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+      <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+      <xs:element name="byte" nillable="true" type="xs:byte"/>
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+      <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+      <xs:element name="double" nillable="true" type="xs:double"/>
+      <xs:element name="float" nillable="true" type="xs:float"/>
+      <xs:element name="int" nillable="true" type="xs:int"/>
+      <xs:element name="long" nillable="true" type="xs:long"/>
+      <xs:element name="QName" nillable="true" type="xs:QName"/>
+      <xs:element name="short" nillable="true" type="xs:short"/>
+      <xs:element name="string" nillable="true" type="xs:string"/>
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+      <xs:element name="char" nillable="true" type="tns:char"/>
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int"/>
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration"/>
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid"/>
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName"/>
+      <xs:attribute name="Id" type="xs:ID"/>
+      <xs:attribute name="Ref" type="xs:IDREF"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.kinetic.ch/Session" elementFormDefault="qualified" targetNamespace="http://services.kinetic.ch/Session">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:simpleType name="WMSessionModule">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Default">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="W2CSimple">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="W2CFull">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="WMSessionModule" nillable="true" type="tns:WMSessionModule"/>
+      <xs:complexType name="RemoteUserInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Domain" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="RemoteUserInfo" nillable="true" type="tns:RemoteUserInfo"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+      <xs:complexType name="ArrayOfstring">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IWMSessionService_CreateWMSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWMSession"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_CreateWMSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWMSessionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_CreateWMSession2_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWMSession2"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_CreateWMSession2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWMSession2Response"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_IsSessionAlive_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsSessionAlive"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_IsSessionAlive_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsSessionAliveResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_TerminateWMSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:TerminateWMSession"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_GetObjectTypeNames_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectTypeNames"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_GetObjectTypeNames_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectTypeNamesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_GetChoiceList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetChoiceList"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_GetChoiceList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetChoiceListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_FileOrFolderExists_InputMessage">
+    <wsdl:part name="parameters" element="tns:FileOrFolderExists"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_FileOrFolderExists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FileOrFolderExistsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_UserOrGroupExists_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserOrGroupExists"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_UserOrGroupExists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserOrGroupExistsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_IsMemberOfGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsMemberOfGroup"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_IsMemberOfGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsMemberOfGroupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_IsUserMemberOfGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserMemberOfGroup"/>
+  </wsdl:message>
+  <wsdl:message name="IWMSessionService_IsUserMemberOfGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserMemberOfGroupResponse"/>
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="false" name="IWMSessionService">
+    <wsdl:operation name="CreateWMSession">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/CreateWMSession" message="tns:IWMSessionService_CreateWMSession_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/CreateWMSessionResponse" message="tns:IWMSessionService_CreateWMSession_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWMSession2">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/CreateWMSession2" message="tns:IWMSessionService_CreateWMSession2_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/CreateWMSession2Response" message="tns:IWMSessionService_CreateWMSession2_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="IsSessionAlive">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/IsSessionAlive" message="tns:IWMSessionService_IsSessionAlive_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/IsSessionAliveResponse" message="tns:IWMSessionService_IsSessionAlive_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="TerminateWMSession">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/TerminateWMSession" message="tns:IWMSessionService_TerminateWMSession_InputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectTypeNames">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/GetObjectTypeNames" message="tns:IWMSessionService_GetObjectTypeNames_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/GetObjectTypeNamesResponse" message="tns:IWMSessionService_GetObjectTypeNames_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetChoiceList">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/GetChoiceList" message="tns:IWMSessionService_GetChoiceList_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/GetChoiceListResponse" message="tns:IWMSessionService_GetChoiceList_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="FileOrFolderExists">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/FileOrFolderExists" message="tns:IWMSessionService_FileOrFolderExists_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/FileOrFolderExistsResponse" message="tns:IWMSessionService_FileOrFolderExists_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="UserOrGroupExists">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/UserOrGroupExists" message="tns:IWMSessionService_UserOrGroupExists_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/UserOrGroupExistsResponse" message="tns:IWMSessionService_UserOrGroupExists_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="IsMemberOfGroup">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/IsMemberOfGroup" message="tns:IWMSessionService_IsMemberOfGroup_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/IsMemberOfGroupResponse" message="tns:IWMSessionService_IsMemberOfGroup_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserMemberOfGroup">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMSessionService/IsUserMemberOfGroup" message="tns:IWMSessionService_IsUserMemberOfGroup_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMSessionService/IsUserMemberOfGroupResponse" message="tns:IWMSessionService_IsUserMemberOfGroup_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WMSessionService" type="tns:IWMSessionService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CreateWMSession">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/CreateWMSession" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWMSession2">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/CreateWMSession2" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsSessionAlive">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/IsSessionAlive" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminateWMSession">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/TerminateWMSession" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectTypeNames">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/GetObjectTypeNames" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChoiceList">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/GetChoiceList" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FileOrFolderExists">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/FileOrFolderExists" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserOrGroupExists">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/UserOrGroupExists" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsMemberOfGroup">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/IsMemberOfGroup" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserMemberOfGroup">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMSessionService/IsUserMemberOfGroup" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WMSessionService">
+    <wsdl:port name="WMSessionService" binding="tns:WMSessionService">
+      <soap:address location="http://svr-de-windrea2.de.ivnet.ch/KineticServices/Kinetic.Services.WMSessionService.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

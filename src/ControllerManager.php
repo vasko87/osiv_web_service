@@ -5,6 +5,7 @@ namespace DbService;
 use DbService\Controller\Base;
 use DbService\Controller\Comparison;
 use DbService\Controller\Db;
+use DbService\Controller\Dms;
 use DbService\Controller\Jira;
 use DbService\Response\Response;
 use DbService\Response\JsonResponse;
@@ -53,6 +54,14 @@ class ControllerManager
                 },
                 'actions' => [
                     'POST:fetch' => 'actionFetch',
+                ],
+            ],
+            'dms' => [
+                'constructor' => function() {
+                    return new Dms();
+                },
+                'actions' => [
+                    'GET:fetch' => 'actionFetch',
                 ],
             ],
         ];

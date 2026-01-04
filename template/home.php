@@ -15,6 +15,7 @@
 <ul>
     <li><a href="./db/">DB Web Interface</a></li>
     <li><a href="./jira/">Jira fetch Web Interface</a></li>
+    <li><a href="./dms/">DMS Web Interface</a></li>
 </ul>
 
 </body>

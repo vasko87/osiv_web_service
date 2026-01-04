@@ -1,0 +1,2336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://services.kinetic.ch/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="WMObjectService" targetNamespace="http://services.kinetic.ch/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://services.kinetic.ch/">
+      <xs:import namespace="http://services.kinetic.ch/Session"/>
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/System"/>
+      <xs:import namespace="http://services.kinetic.ch"/>
+      <xs:element name="CreateWMSession">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://services.kinetic.ch/Session" minOccurs="0" name="sessionModule" type="q1:WMSessionModule"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateWMSessionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CreateWMSessionResult" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateWMSession2">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://services.kinetic.ch/Session" minOccurs="0" name="sessionModule" type="q2:WMSessionModule"/>
+            <xs:element xmlns:q3="http://services.kinetic.ch/Session" minOccurs="0" name="remoteUser" nillable="true" type="q3:RemoteUserInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateWMSession2Response">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CreateWMSession2Result" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TerminateWMSession">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateDocument">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateDocumentResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateFolder">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateFolderResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadByPath">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadByPathResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadByVersionId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="versionId" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadByVersionIdResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadFolderSubItems">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="entity" type="tns:WMObjectEntity"/>
+            <xs:element minOccurs="0" name="mask" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:simpleType name="WMObjectEntity">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="DocumentAndMap"/>
+          <xs:enumeration value="Document"/>
+          <xs:enumeration value="Folder"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="WMObjectEntity" nillable="true" type="tns:WMObjectEntity"/>
+      <xs:element name="LoadFolderSubItemsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="LoadFolderSubItemsResult" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadPreVersions">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadPreVersionsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="LoadPreVersionsResult" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadFromList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="index" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoadFromListResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ImportDocument">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="fileId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="overwrite" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ImportDocumentResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateAndImportDocument">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="fileId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateAndImportDocumentResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ExportDocument">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ExportDocumentResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ExportDocumentResult" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetValues">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="objectTypeName" nillable="true" type="xs:string"/>
+            <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="varNames" nillable="true" type="q4:ArrayOfstring"/>
+            <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="varValues" nillable="true" type="q5:ArrayOfanyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetValuesResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetValuesWithStrings">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="objectTypeName" nillable="true" type="xs:string"/>
+            <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="varNames" nillable="true" type="q6:ArrayOfstring"/>
+            <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="varValues" nillable="true" type="q7:ArrayOfstring"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetValuesWithStringsResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetValuesWithVariables">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="objectTypeName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="variables" nillable="true" type="tns:WMVariables"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="WMVariables">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="WMVariable" nillable="true" type="tns:WMVariable"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WMVariables" nillable="true" type="tns:WMVariables"/>
+      <xs:complexType name="WMVariable">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ValueType" type="tns:VariableValueTypes"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WMVariable" nillable="true" type="tns:WMVariable"/>
+      <xs:simpleType name="VariableValueTypes">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Undefined"/>
+          <xs:enumeration value="Boolean">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Int32"/>
+          <xs:enumeration value="Int64">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="FixedPoint">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Float">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="String">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Currency">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Date">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Time"/>
+          <xs:enumeration value="TimeStamp">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Variant">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Vector">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4096</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Int32Vector">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4098</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Int64Vector">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4107</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="StringVector">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4097</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="FixedPointVector">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4102</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="VariableValueTypes" nillable="true" type="tns:VariableValueTypes"/>
+      <xs:complexType name="StringVariable">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="StringVariable" nillable="true" type="tns:StringVariable"/>
+      <xs:complexType name="DateTimeVariable">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Value" nillable="true" type="xs:dateTime"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="DateTimeVariable" nillable="true" type="tns:DateTimeVariable"/>
+      <xs:complexType name="Int32Variable">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Value" nillable="true" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Int32Variable" nillable="true" type="tns:Int32Variable"/>
+      <xs:complexType name="Int64Variable">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Value" nillable="true" type="xs:long"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Int64Variable" nillable="true" type="tns:Int64Variable"/>
+      <xs:complexType name="FixedPointVariable">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Value" nillable="true" type="xs:decimal"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="FixedPointVariable" nillable="true" type="tns:FixedPointVariable"/>
+      <xs:complexType name="AnyTypeVariable">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Value" nillable="true" type="xs:anyType"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="AnyTypeVariable" nillable="true" type="tns:AnyTypeVariable"/>
+      <xs:complexType name="AnyTypeArray">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Value" nillable="true" type="q8:ArrayOfanyType"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="AnyTypeArray" nillable="true" type="tns:AnyTypeArray"/>
+      <xs:complexType name="FloatVariable">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Value" nillable="true" type="xs:double"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="FloatVariable" nillable="true" type="tns:FloatVariable"/>
+      <xs:complexType name="StringArray">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Value" nillable="true" type="q9:ArrayOfstring"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="StringArray" nillable="true" type="tns:StringArray"/>
+      <xs:complexType name="Int32Array">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="Value" nillable="true" type="q10:ArrayOfNullableOfint"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Int32Array" nillable="true" type="tns:Int32Array"/>
+      <xs:complexType name="Int64Array">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:WMVariable">
+            <xs:sequence>
+              <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="Value" nillable="true" type="q11:ArrayOfNullableOflong"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Int64Array" nillable="true" type="tns:Int64Array"/>
+      <xs:element name="SetValuesWithVariablesResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetValue">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="value" nillable="true" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetValueResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddHistory">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="input" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddHistoryResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddHistory2">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="dateTime" nillable="true" type="xs:dateTime"/>
+            <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="entries" nillable="true" type="q12:ArrayOfstring"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddHistory2Response">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddHistoryRange">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="historyEntries" nillable="true" type="tns:History"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="History">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="tns:HistoryEntry"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="History" nillable="true" type="tns:History"/>
+      <xs:complexType name="HistoryEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Date" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="User" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="HistoryEntry" nillable="true" type="tns:HistoryEntry"/>
+      <xs:element name="AddHistoryRangeResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetObjectTypeId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetObjectTypeIdResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetObjectTypeIdResult" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetObjectTypeName">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetObjectTypeNameResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetObjectTypeNameResult" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValue">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValueResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetValueResult" nillable="true" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValueAsString">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValueAsStringResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetValueAsStringResult" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValues">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="varNames" nillable="true" type="q13:ArrayOfstring"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValuesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetValuesResult" nillable="true" type="q14:ArrayOfanyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValuesAsWMVariables">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="varNames" nillable="true" type="q15:ArrayOfstring"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValuesAsWMVariablesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetValuesAsWMVariablesResult" nillable="true" type="tns:WMVariables"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValuesAsString">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="varNames" nillable="true" type="q16:ArrayOfstring"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValuesAsStringResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetValuesAsStringResult" nillable="true" type="q17:ArrayOfstring"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHistory">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHistoryResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetHistoryResult" nillable="true" type="tns:History"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetObjectInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetObjectInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetObjectInfoResult" nillable="true" type="tns:WMObjectInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="WMObjectInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreationTime" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="Creator" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="IsFile" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="LastWriteTime" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ObjectType" nillable="true" type="tns:ObjectTypeInfo"/>
+          <xs:element minOccurs="0" name="Size" type="xs:long"/>
+          <xs:element minOccurs="0" name="Status" nillable="true" type="tns:StatusInfo"/>
+          <xs:element minOccurs="0" name="VersionId" type="xs:int"/>
+          <xs:element minOccurs="0" name="VersionNumber" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WMObjectInfo" nillable="true" type="tns:WMObjectInfo"/>
+      <xs:complexType name="ObjectTypeInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Id" type="xs:int"/>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ObjectTypeInfo" nillable="true" type="tns:ObjectTypeInfo"/>
+      <xs:complexType name="StatusInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Archived" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="CheckOutEditOnly" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="CheckedOut" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="MarkedForArchive" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="PreVersion" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="UserWorkLock" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="WorklockEditOnly" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="StatusInfo" nillable="true" type="tns:StatusInfo"/>
+      <xs:element name="GetLifeCycleInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetLifeCycleInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetLifeCycleInfoResult" nillable="true" type="tns:LifeCycleInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="LifeCycleInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ArchiveLifeCycle" nillable="true" type="tns:LifeCycle"/>
+          <xs:element minOccurs="0" name="EditLifeCycle" nillable="true" type="tns:LifeCycle"/>
+          <xs:element minOccurs="0" name="Editable" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="LifeCycleInfo" nillable="true" type="tns:LifeCycleInfo"/>
+      <xs:complexType name="LifeCycle">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsLifeCycleRuleChanged" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="IsManualChanged" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="IsManualEdit" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="IsManualMove" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="IsNoAutoMove" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="IsUseObjectTypeRule" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="LifeCyleType" type="tns:LifeCycleType"/>
+          <xs:element minOccurs="0" name="PeriodEndDate" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="LifeCycle" nillable="true" type="tns:LifeCycle"/>
+      <xs:simpleType name="LifeCycleType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="EditPeriod">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ArchivePeriod">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="LifeCycleType" nillable="true" type="tns:LifeCycleType"/>
+      <xs:element name="Exists">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ExistsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ExistsResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateVersion">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateVersionResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateVersion2">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="archivePreVersion" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateVersion2Response">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Delete">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="includePreVersions" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsTypeChangable">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsTypeChangableResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IsTypeChangableResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsEditableFor">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="editMode" type="tns:WMObjectEditMode"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:simpleType name="WMObjectEditMode">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NoEdit"/>
+          <xs:enumeration value="SystemData"/>
+          <xs:enumeration value="TypedData"/>
+          <xs:enumeration value="Binary">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Fulltext">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="History">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Rights">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ParentEdit">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">64</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="LifeCycleEdit">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">128</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SetObjectType">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">256</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ChangeArchivedIndex">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16384</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Delete">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">131072</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MakeVersion">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">262144</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AddFulltext">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">524288</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ActivatePreVersion">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1048576</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ChangeArchive">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2097152</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CheckOut">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4194304</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CheckIn">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8388608</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="UndoCheckOut">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">33554432</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="UserWorkLock">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">67108864</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MoveReadOnly">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">134217728</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MoveArchivedBinary">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">268435456</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="FileSystem">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">21</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Attribute">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Object">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">31</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="NoBinary">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">27</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ObjectAndRights">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">63</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="FilesystemData">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="IndexEdit">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">986</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="IndexRightsEdit">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1018</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="All">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2047</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="WMObjectEditMode" nillable="true" type="tns:WMObjectEditMode"/>
+      <xs:element name="IsEditableForResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IsEditableForResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsLockedFor">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="editMode" type="tns:WMObjectEditMode"/>
+            <xs:element minOccurs="0" name="currentUserOnly" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsLockedForResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IsLockedForResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetLockInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetLockInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetLockInfoResult" nillable="true" type="tns:WMObjectLockInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="WMObjectLockInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsLocked" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="LockedBy" nillable="true" type="tns:WMUserInfo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WMObjectLockInfo" nillable="true" type="tns:WMObjectLockInfo"/>
+      <xs:complexType name="WMUserInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WMUserInfo" nillable="true" type="tns:WMUserInfo"/>
+      <xs:element name="HasPreVersions">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="HasPreVersionsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="HasPreVersionsResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MoveTo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="inheritRights" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MoveToResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="HasAccessRights">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element xmlns:q18="http://services.kinetic.ch" minOccurs="0" name="rights" type="q18:AccessRight"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="HasAccessRightsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="HasAccessRightsResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CheckAccessRights">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="userOrGroupName" nillable="true" type="xs:string"/>
+            <xs:element xmlns:q19="http://services.kinetic.ch" minOccurs="0" name="rights" type="q19:AccessRight"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CheckAccessRightsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CheckAccessRightsResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddAccessRight">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="userOrGroupName" nillable="true" type="xs:string"/>
+            <xs:element xmlns:q20="http://services.kinetic.ch" minOccurs="0" name="rights" type="q20:AccessRight"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddAccessRightResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetAccessRights">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="accessRights" nillable="true" type="tns:AccessRights"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="AccessRights">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="MemberAccessRight" nillable="true" type="tns:MemberAccessRight"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AccessRights" nillable="true" type="tns:AccessRights"/>
+      <xs:complexType name="MemberAccessRight">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MemberName" nillable="true" type="xs:string"/>
+          <xs:element xmlns:q21="http://services.kinetic.ch" minOccurs="0" name="Rights" type="q21:AccessRight"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="MemberAccessRight" nillable="true" type="tns:MemberAccessRight"/>
+      <xs:element name="SetAccessRightsResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CopyValuesTo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="objectTypeName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CopyValuesToResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CopyValuesFrom">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="objectTypeName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CopyValuesFromResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateLifeCycle">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="lifeCyle" type="tns:LifeCycleType"/>
+            <xs:element minOccurs="0" name="overwriteManualEdit" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateLifeCycleResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ManualArchive">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ManualArchiveResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+      <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+      <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+      <xs:element name="byte" nillable="true" type="xs:byte"/>
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+      <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+      <xs:element name="double" nillable="true" type="xs:double"/>
+      <xs:element name="float" nillable="true" type="xs:float"/>
+      <xs:element name="int" nillable="true" type="xs:int"/>
+      <xs:element name="long" nillable="true" type="xs:long"/>
+      <xs:element name="QName" nillable="true" type="xs:QName"/>
+      <xs:element name="short" nillable="true" type="xs:short"/>
+      <xs:element name="string" nillable="true" type="xs:string"/>
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+      <xs:element name="char" nillable="true" type="tns:char"/>
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int"/>
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration"/>
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid"/>
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName"/>
+      <xs:attribute name="Id" type="xs:ID"/>
+      <xs:attribute name="Ref" type="xs:IDREF"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.kinetic.ch/Session" elementFormDefault="qualified" targetNamespace="http://services.kinetic.ch/Session">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:simpleType name="WMSessionModule">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Default">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="W2CSimple">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="W2CFull">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="WMSessionModule" nillable="true" type="tns:WMSessionModule"/>
+      <xs:complexType name="RemoteUserInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Domain" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="RemoteUserInfo" nillable="true" type="tns:RemoteUserInfo"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+      <xs:complexType name="ArrayOfstring">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring"/>
+      <xs:complexType name="ArrayOfanyType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfanyType" nillable="true" type="tns:ArrayOfanyType"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System">
+      <xs:complexType name="ArrayOfNullableOfint">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="int" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfNullableOfint" nillable="true" type="tns:ArrayOfNullableOfint"/>
+      <xs:complexType name="ArrayOfNullableOflong">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="long" nillable="true" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfNullableOflong" nillable="true" type="tns:ArrayOfNullableOflong"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.kinetic.ch" elementFormDefault="qualified" targetNamespace="http://services.kinetic.ch">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:simpleType name="AccessRight">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Read">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Write">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Admin">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AllRights">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="IndexWrite">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RigthOnly">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">67108864</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SystemWrite">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DocContent">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DirContent">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">64</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="AccessRight" nillable="true" type="tns:AccessRight"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IWMObjectService_CreateWMSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWMSession"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateWMSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWMSessionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateWMSession2_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWMSession2"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateWMSession2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWMSession2Response"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_TerminateWMSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:TerminateWMSession"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateDocument"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateFolder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFolder"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateFolder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFolderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadByPath_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadByPath"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadByPath_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadByPathResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadByVersionId_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadByVersionId"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadByVersionId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadByVersionIdResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadFolderSubItems_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadFolderSubItems"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadFolderSubItems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadFolderSubItemsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadPreVersions_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadPreVersions"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadPreVersions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadPreVersionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadFromList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadFromList"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_LoadFromList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadFromListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_ImportDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportDocument"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_ImportDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateAndImportDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAndImportDocument"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateAndImportDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAndImportDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_ExportDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExportDocument"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_ExportDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExportDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetValues_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetValues"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetValues_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetValuesWithStrings_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetValuesWithStrings"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetValuesWithStrings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetValuesWithStringsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetValuesWithVariables_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetValuesWithVariables"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetValuesWithVariables_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetValuesWithVariablesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetValue_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetValue"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetValue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetValueResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_AddHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddHistory"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_AddHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddHistoryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_AddHistory2_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddHistory2"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_AddHistory2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddHistory2Response"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_AddHistoryRange_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddHistoryRange"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_AddHistoryRange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddHistoryRangeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetObjectTypeId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectTypeId"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetObjectTypeId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectTypeIdResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetObjectTypeName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectTypeName"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetObjectTypeName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectTypeNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValue_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetValue"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetValueResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValueAsString_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetValueAsString"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValueAsString_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetValueAsStringResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValues_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetValues"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValues_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValuesAsWMVariables_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetValuesAsWMVariables"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValuesAsWMVariables_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetValuesAsWMVariablesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValuesAsString_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetValuesAsString"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetValuesAsString_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetValuesAsStringResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHistory"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHistoryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetObjectInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectInfo"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetObjectInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetLifeCycleInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLifeCycleInfo"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetLifeCycleInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLifeCycleInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_Exists_InputMessage">
+    <wsdl:part name="parameters" element="tns:Exists"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_Exists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExistsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateVersion_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateVersion"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateVersion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateVersionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateVersion2_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateVersion2"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CreateVersion2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateVersion2Response"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_Delete_InputMessage">
+    <wsdl:part name="parameters" element="tns:Delete"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_Delete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_IsTypeChangable_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsTypeChangable"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_IsTypeChangable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsTypeChangableResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_IsEditableFor_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsEditableFor"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_IsEditableFor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsEditableForResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_IsLockedFor_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsLockedFor"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_IsLockedFor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsLockedForResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetLockInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_GetLockInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLockInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_HasPreVersions_InputMessage">
+    <wsdl:part name="parameters" element="tns:HasPreVersions"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_HasPreVersions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HasPreVersionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_MoveTo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MoveTo"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_MoveTo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MoveToResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_HasAccessRights_InputMessage">
+    <wsdl:part name="parameters" element="tns:HasAccessRights"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_HasAccessRights_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HasAccessRightsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CheckAccessRights_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckAccessRights"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CheckAccessRights_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckAccessRightsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_AddAccessRight_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddAccessRight"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_AddAccessRight_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAccessRightResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetAccessRights_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetAccessRights"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_SetAccessRights_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetAccessRightsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CopyValuesTo_InputMessage">
+    <wsdl:part name="parameters" element="tns:CopyValuesTo"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CopyValuesTo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CopyValuesToResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CopyValuesFrom_InputMessage">
+    <wsdl:part name="parameters" element="tns:CopyValuesFrom"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_CopyValuesFrom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CopyValuesFromResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_UpdateLifeCycle_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateLifeCycle"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_UpdateLifeCycle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateLifeCycleResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_ManualArchive_InputMessage">
+    <wsdl:part name="parameters" element="tns:ManualArchive"/>
+  </wsdl:message>
+  <wsdl:message name="IWMObjectService_ManualArchive_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ManualArchiveResponse"/>
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="false" name="IWMObjectService">
+    <wsdl:operation name="CreateWMSession">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateWMSession" message="tns:IWMObjectService_CreateWMSession_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateWMSessionResponse" message="tns:IWMObjectService_CreateWMSession_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWMSession2">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateWMSession2" message="tns:IWMObjectService_CreateWMSession2_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateWMSession2Response" message="tns:IWMObjectService_CreateWMSession2_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="TerminateWMSession">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/TerminateWMSession" message="tns:IWMObjectService_TerminateWMSession_InputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDocument">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateDocument" message="tns:IWMObjectService_CreateDocument_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateDocumentResponse" message="tns:IWMObjectService_CreateDocument_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreateFolder">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateFolder" message="tns:IWMObjectService_CreateFolder_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateFolderResponse" message="tns:IWMObjectService_CreateFolder_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="LoadByPath">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadByPath" message="tns:IWMObjectService_LoadByPath_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadByPathResponse" message="tns:IWMObjectService_LoadByPath_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="LoadByVersionId">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadByVersionId" message="tns:IWMObjectService_LoadByVersionId_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadByVersionIdResponse" message="tns:IWMObjectService_LoadByVersionId_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="LoadFolderSubItems">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadFolderSubItems" message="tns:IWMObjectService_LoadFolderSubItems_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadFolderSubItemsResponse" message="tns:IWMObjectService_LoadFolderSubItems_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="LoadPreVersions">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadPreVersions" message="tns:IWMObjectService_LoadPreVersions_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadPreVersionsResponse" message="tns:IWMObjectService_LoadPreVersions_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="LoadFromList">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadFromList" message="tns:IWMObjectService_LoadFromList_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/LoadFromListResponse" message="tns:IWMObjectService_LoadFromList_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ImportDocument">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/ImportDocument" message="tns:IWMObjectService_ImportDocument_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/ImportDocumentResponse" message="tns:IWMObjectService_ImportDocument_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreateAndImportDocument">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateAndImportDocument" message="tns:IWMObjectService_CreateAndImportDocument_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateAndImportDocumentResponse" message="tns:IWMObjectService_CreateAndImportDocument_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ExportDocument">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/ExportDocument" message="tns:IWMObjectService_ExportDocument_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/ExportDocumentResponse" message="tns:IWMObjectService_ExportDocument_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetValues">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetValues" message="tns:IWMObjectService_SetValues_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetValuesResponse" message="tns:IWMObjectService_SetValues_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetValuesWithStrings">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetValuesWithStrings" message="tns:IWMObjectService_SetValuesWithStrings_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetValuesWithStringsResponse" message="tns:IWMObjectService_SetValuesWithStrings_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetValuesWithVariables">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetValuesWithVariables" message="tns:IWMObjectService_SetValuesWithVariables_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetValuesWithVariablesResponse" message="tns:IWMObjectService_SetValuesWithVariables_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetValue">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetValue" message="tns:IWMObjectService_SetValue_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetValueResponse" message="tns:IWMObjectService_SetValue_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="AddHistory">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/AddHistory" message="tns:IWMObjectService_AddHistory_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/AddHistoryResponse" message="tns:IWMObjectService_AddHistory_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="AddHistory2">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/AddHistory2" message="tns:IWMObjectService_AddHistory2_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/AddHistory2Response" message="tns:IWMObjectService_AddHistory2_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="AddHistoryRange">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/AddHistoryRange" message="tns:IWMObjectService_AddHistoryRange_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/AddHistoryRangeResponse" message="tns:IWMObjectService_AddHistoryRange_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectTypeId">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetObjectTypeId" message="tns:IWMObjectService_GetObjectTypeId_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetObjectTypeIdResponse" message="tns:IWMObjectService_GetObjectTypeId_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectTypeName">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetObjectTypeName" message="tns:IWMObjectService_GetObjectTypeName_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetObjectTypeNameResponse" message="tns:IWMObjectService_GetObjectTypeName_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValue">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValue" message="tns:IWMObjectService_GetValue_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValueResponse" message="tns:IWMObjectService_GetValue_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValueAsString">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValueAsString" message="tns:IWMObjectService_GetValueAsString_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValueAsStringResponse" message="tns:IWMObjectService_GetValueAsString_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValues">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValues" message="tns:IWMObjectService_GetValues_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValuesResponse" message="tns:IWMObjectService_GetValues_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesAsWMVariables">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValuesAsWMVariables" message="tns:IWMObjectService_GetValuesAsWMVariables_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValuesAsWMVariablesResponse" message="tns:IWMObjectService_GetValuesAsWMVariables_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesAsString">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValuesAsString" message="tns:IWMObjectService_GetValuesAsString_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetValuesAsStringResponse" message="tns:IWMObjectService_GetValuesAsString_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetHistory">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetHistory" message="tns:IWMObjectService_GetHistory_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetHistoryResponse" message="tns:IWMObjectService_GetHistory_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectInfo">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetObjectInfo" message="tns:IWMObjectService_GetObjectInfo_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetObjectInfoResponse" message="tns:IWMObjectService_GetObjectInfo_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetLifeCycleInfo">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetLifeCycleInfo" message="tns:IWMObjectService_GetLifeCycleInfo_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetLifeCycleInfoResponse" message="tns:IWMObjectService_GetLifeCycleInfo_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="Exists">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/Exists" message="tns:IWMObjectService_Exists_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/ExistsResponse" message="tns:IWMObjectService_Exists_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreateVersion">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateVersion" message="tns:IWMObjectService_CreateVersion_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateVersionResponse" message="tns:IWMObjectService_CreateVersion_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreateVersion2">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateVersion2" message="tns:IWMObjectService_CreateVersion2_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CreateVersion2Response" message="tns:IWMObjectService_CreateVersion2_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/Delete" message="tns:IWMObjectService_Delete_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/DeleteResponse" message="tns:IWMObjectService_Delete_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="IsTypeChangable">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/IsTypeChangable" message="tns:IWMObjectService_IsTypeChangable_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/IsTypeChangableResponse" message="tns:IWMObjectService_IsTypeChangable_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="IsEditableFor">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/IsEditableFor" message="tns:IWMObjectService_IsEditableFor_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/IsEditableForResponse" message="tns:IWMObjectService_IsEditableFor_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="IsLockedFor">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/IsLockedFor" message="tns:IWMObjectService_IsLockedFor_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/IsLockedForResponse" message="tns:IWMObjectService_IsLockedFor_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetLockInfo">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetLockInfo" message="tns:IWMObjectService_GetLockInfo_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/GetLockInfoResponse" message="tns:IWMObjectService_GetLockInfo_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="HasPreVersions">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/HasPreVersions" message="tns:IWMObjectService_HasPreVersions_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/HasPreVersionsResponse" message="tns:IWMObjectService_HasPreVersions_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTo">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/MoveTo" message="tns:IWMObjectService_MoveTo_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/MoveToResponse" message="tns:IWMObjectService_MoveTo_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="HasAccessRights">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/HasAccessRights" message="tns:IWMObjectService_HasAccessRights_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/HasAccessRightsResponse" message="tns:IWMObjectService_HasAccessRights_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CheckAccessRights">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CheckAccessRights" message="tns:IWMObjectService_CheckAccessRights_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CheckAccessRightsResponse" message="tns:IWMObjectService_CheckAccessRights_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="AddAccessRight">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/AddAccessRight" message="tns:IWMObjectService_AddAccessRight_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/AddAccessRightResponse" message="tns:IWMObjectService_AddAccessRight_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetAccessRights">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetAccessRights" message="tns:IWMObjectService_SetAccessRights_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/SetAccessRightsResponse" message="tns:IWMObjectService_SetAccessRights_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CopyValuesTo">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CopyValuesTo" message="tns:IWMObjectService_CopyValuesTo_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CopyValuesToResponse" message="tns:IWMObjectService_CopyValuesTo_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CopyValuesFrom">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/CopyValuesFrom" message="tns:IWMObjectService_CopyValuesFrom_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/CopyValuesFromResponse" message="tns:IWMObjectService_CopyValuesFrom_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLifeCycle">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/UpdateLifeCycle" message="tns:IWMObjectService_UpdateLifeCycle_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/UpdateLifeCycleResponse" message="tns:IWMObjectService_UpdateLifeCycle_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ManualArchive">
+      <wsdl:input wsaw:Action="http://services.kinetic.ch/IWMObjectService/ManualArchive" message="tns:IWMObjectService_ManualArchive_InputMessage"/>
+      <wsdl:output wsaw:Action="http://services.kinetic.ch/IWMObjectService/ManualArchiveResponse" message="tns:IWMObjectService_ManualArchive_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WMObjectService" type="tns:IWMObjectService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CreateWMSession">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CreateWMSession" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWMSession2">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CreateWMSession2" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminateWMSession">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/TerminateWMSession" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CreateDocument">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CreateDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateFolder">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CreateFolder" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadByPath">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/LoadByPath" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadByVersionId">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/LoadByVersionId" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadFolderSubItems">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/LoadFolderSubItems" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadPreVersions">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/LoadPreVersions" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadFromList">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/LoadFromList" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportDocument">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/ImportDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateAndImportDocument">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CreateAndImportDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportDocument">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/ExportDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetValues">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/SetValues" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetValuesWithStrings">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/SetValuesWithStrings" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetValuesWithVariables">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/SetValuesWithVariables" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetValue">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/SetValue" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddHistory">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/AddHistory" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddHistory2">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/AddHistory2" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddHistoryRange">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/AddHistoryRange" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectTypeId">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetObjectTypeId" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectTypeName">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetObjectTypeName" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetValue">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetValue" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetValueAsString">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetValueAsString" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetValues">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetValues" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesAsWMVariables">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetValuesAsWMVariables" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesAsString">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetValuesAsString" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHistory">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetHistory" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectInfo">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetObjectInfo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLifeCycleInfo">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetLifeCycleInfo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Exists">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/Exists" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateVersion">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CreateVersion" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateVersion2">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CreateVersion2" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/Delete" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsTypeChangable">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/IsTypeChangable" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsEditableFor">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/IsEditableFor" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsLockedFor">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/IsLockedFor" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLockInfo">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/GetLockInfo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasPreVersions">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/HasPreVersions" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTo">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/MoveTo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasAccessRights">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/HasAccessRights" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckAccessRights">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CheckAccessRights" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddAccessRight">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/AddAccessRight" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetAccessRights">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/SetAccessRights" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyValuesTo">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CopyValuesTo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyValuesFrom">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/CopyValuesFrom" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLifeCycle">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/UpdateLifeCycle" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManualArchive">
+      <soap:operation soapAction="http://services.kinetic.ch/IWMObjectService/ManualArchive" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WMObjectService">
+    <wsdl:port name="WMObjectService" binding="tns:WMObjectService">
+      <soap:address location="http://svr-de-windrea2.de.ivnet.ch/KineticServices/Kinetic.Services.WMObjectService.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
+

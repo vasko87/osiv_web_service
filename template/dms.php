@@ -1,6 +1,6 @@
 <html lang="en-US">
 <head>
-    <title>Release Notes WS</title>
+    <title>DMS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <link href="<?= assetLink('../css/bootstrap.min.css') ?>" rel="stylesheet">
@@ -18,35 +18,24 @@
 <body>
 
 <div class="container mt-2">
-    <h2>Jira Fetch</h2>
+    <h2>DMS</h2>
     <hr>
 
-    <form method="POST" action="?">
+    <form method="GET" action="?">
         <div class="row input-group">
             <div class="col-md-4">
                 <div class="form">
-                    <label for="version">Release version</label>
-                    <input id="version" class="form-control-sm w-25" name="version" placeholder="25.10" />
+                    <label for="version_id">ID</label>
+                    <input id="version_id" class="form-control-sm w-25" name="version_id" placeholder="1" />
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="form">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" class="form-control-sm" name="date" pattern="\d{4}-\d{2}-\d{2}" />
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <button type="submit" name="action[fetch]" value="1" class="btn btn-link"><i class="fas fa-file-excel"></i> Download</button>
+            <div class="col-md-8">
+                <button type="submit" name="action[fetch]" value="1" class="btn btn-link"><i class="fas fa-database"></i> Fetch</button>
             </div>
        </div>
     </form>
 </div>
-
-<script>
-document.getElementById('date').valueAsDate = new Date();
-</script>
 
 </body>
 </html>
