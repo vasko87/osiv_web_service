@@ -9,7 +9,7 @@ use DbService\Service\Dms\DmsService;
 
 class Dms extends Base
 {
-    private DmsService $service;
+    private $service;
 
     public function __construct()
     {
