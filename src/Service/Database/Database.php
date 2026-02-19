@@ -23,7 +23,6 @@ class Database
     {
         $this->conn = new \PDO($this->dsnString);
         $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $this->conn->exec("SET NAMES 'utf8'");
     }
 
     public function execute(string $query): \PDOStatement
