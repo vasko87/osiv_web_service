@@ -27,7 +27,7 @@ class Database
 
     public function execute(string $query): \PDOStatement
     {
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->conn->prepare(iconv('UTF-8//IGNORE', 'ISO-8859-1', $query));
         $stmt->execute();
 
         return $stmt;
@@ -90,7 +90,7 @@ class Database
         if (is_array($input)) {
             return array_map([$this, 'fixEncoding'], $input);
         } elseif (is_string($input)) {
-            return iconv('Windows-1252', 'UTF-8//IGNORE', $input);
+            return iconv('ISO-8859-1', 'UTF-8//IGNORE', $input);
         }
         return $input;
     }
