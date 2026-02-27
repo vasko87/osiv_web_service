@@ -63,6 +63,7 @@ class Db extends Base
 
             if ($isSelect) {
                 $data = $database->fetchAll($stmt);
+                $data = $database->fixEncoding($data);
 
                 if ($shouldSortFields) {
                     foreach ($data as &$row) {
@@ -78,7 +79,7 @@ class Db extends Base
                     $data = [];
                     while ($row = $database->fetchLazy($stmt)) {
                         $row = json_decode(json_encode($row), true);
-                        $data[] = $row;
+                        $data[] = $database->fixEncoding($row);
                     }
                 }
 
