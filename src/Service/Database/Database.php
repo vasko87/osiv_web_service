@@ -10,7 +10,7 @@ class Database
     public function __construct(array $dbConfig)
     {
         $this->dsnString = sprintf(
-            'odbc: DSN=%s;SERVER=%s;UID=%s;PWD=%s;DATABASE=%s',
+            'odbc: DSN=%s;SERVER=%s;UID=%s;PWD=%s;DATABASE=%s;-cpinternal UTF-8;-cpstream UTF-8',
             $dbConfig['dsn'],
             $dbConfig['server'],
             $dbConfig['user'],
@@ -83,16 +83,6 @@ class Database
         }
 
         return $report;
-    }
-
-    public function fixEncoding($input)
-    {
-        if (is_array($input)) {
-            return array_map([$this, 'fixEncoding'], $input);
-        } elseif (is_string($input)) {
-            return iconv('Windows-1252', 'UTF-8//IGNORE', $input);
-        }
-        return $input;
     }
 
     public function getDbStruct()
