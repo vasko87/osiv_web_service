@@ -33,6 +33,26 @@ class Database
         return $stmt;
     }
 
+    public function beginTransaction(): void
+    {
+        $this->conn->beginTransaction();
+    }
+
+    public function rollback(): void
+    {
+        $this->conn->rollback();
+    }
+
+    public function commit(): void
+    {
+        $this->conn->commit();
+    }
+
+    public function inTransaction(): bool
+    {
+        return $this->conn->inTransaction();
+    }
+
     public function fetchAll(\PDOStatement $stmt)
     {
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);

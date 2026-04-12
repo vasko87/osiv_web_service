@@ -51,13 +51,18 @@ class Db extends Base
         }
 
         $shouldSortFields = $request->getBool('sortFields');
-        $query = $request->getString('q');
+        $query = trim($request->getString('q'));
+        $confirmCommit = $request->getBool('confirm_commit');
 
         try {
             $database = $this->getDatabase($dbConfig, $request->getBool('debug'));
             $database->connect();
 
             $isSelect = $database->isQuerySelect($query);
+
+            if (!$isSelect && !$confirmCommit) {
+                $database->beginTransaction();
+            }
 
             $stmt = $database->execute($query);
 
@@ -91,15 +96,35 @@ class Db extends Base
             } else {
                 $rowCount = $stmt->rowCount();
 
+                if ($database->inTransaction()) {
+                    if ($confirmCommit || $rowCount < 2) {
+                        $database->commit();
+                    } else {
+                        $database->rollback();
+
+                        return new JsonResponsePretty(
+                            406,
+                            [
+                                'status' => 'rollback',
+                                'rows_affected' => $rowCount,
+                                'message' => 'This query requires a confirmation',
+                            ]
+                        );
+                    }
+                }
+
                 return new JsonResponsePretty(
                     200,
                     [
                         'status' => 'OK',
-                        'rows_affected' => $rowCount
+                        'rows_affected' => $rowCount,
                     ]
                 );
             }
         } catch (\Throwable $t) {
+            if ($database->inTransaction()) {
+                $database->rollback();
+            }
             return new JsonResponsePretty(503, ['error' => 'Error: ' . $t->getMessage()]);
         }
     }

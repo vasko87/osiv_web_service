@@ -4,6 +4,8 @@ namespace DbService\Service\Database;
 
 class DatabaseMock
 {
+    private bool $inTransaction = false;
+
     public function __construct(array $dbConfig)
     {
         // not implemented
@@ -17,6 +19,26 @@ class DatabaseMock
     public function execute(string $query): StmtMock
     {
         return new StmtMock();
+    }
+
+    public function beginTransaction(): void
+    {
+        $this->inTransaction = true;
+    }
+
+    public function rollback(): void
+    {
+        $this->inTransaction = false;
+    }
+
+    public function commit(): void
+    {
+        $this->inTransaction = false;
+    }
+
+    public function inTransaction(): bool
+    {
+        return $this->inTransaction;
     }
 
     public function fetchAll(StmtMock $stmt)

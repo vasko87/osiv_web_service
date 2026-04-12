@@ -24,9 +24,7 @@ class JsonResponse implements Response
 
         header('Content-Type: application/json; charset=utf-8');
 
-        if (!empty($this->data)) {
-            $this->printData();
-        }
+        $this->printData();
     }
 
     protected function printData(): void

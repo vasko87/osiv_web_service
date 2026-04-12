@@ -251,7 +251,7 @@ class DbStructControl
     }
 }
 
-function executeAndView() {
+function executeAndView(confirmCommit) {
     const form = document.querySelector('form');
     const formData = new FormData(form);
     const queryResult = document.querySelector('#query_result');
@@ -261,6 +261,10 @@ function executeAndView() {
     // Show loading state
     queryResult.innerHTML = '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>';
 
+    if (confirmCommit === true) {
+        formData.append('confirm_commit', '1');
+    }
+
     fetch('query', {
         method: 'POST',
         body: formData
@@ -269,6 +273,16 @@ function executeAndView() {
     .then(data => {
         if (data.error) {
             queryResult.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+        } else if (data.rows_affected !== undefined && data.status === 'rollback') {
+            if (confirmCommit === true) {
+                queryResult.innerHTML = `<div class="alert alert-danger">Server error: Cannot execute confirmed query</div>`;
+                return;
+            }
+            if (confirm(`Rows to be affected: ${data.rows_affected}. Do you confirm the execution?`)) {
+                return executeAndView(true);
+            } else {
+                queryResult.innerHTML = `<div class="alert alert-warning">Query requires a confirmation, rows to be affected: ${data.rows_affected}</div>`;
+            }
         } else if (data.rows_affected !== undefined) {
             queryResult.innerHTML = `<div class="alert alert-success">Query executed successfully. Rows affected: ${data.rows_affected}</div>`;
         } else if (Array.isArray(data) && data.length > 0) {
